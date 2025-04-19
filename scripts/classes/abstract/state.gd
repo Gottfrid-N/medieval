@@ -9,7 +9,7 @@ func handle_input(input: InputEvent):
     if sub_state != null:
         sub_state.handle_input(input)
 
-func enter(previous_state_path: NodePath, _sub_states: Array[State]) -> void:
+func enter(previous_state_path: NodePath, _sub_states: Array[State] = [null]) -> void:
     state_enter(previous_state_path)
     sub_state = _sub_states[0]
     if sub_state != null:
@@ -30,18 +30,17 @@ func exit():
     if sub_state != null:
         sub_state.exit()
 
-
 func state_handle_input(input: InputEvent):
-    pass
+    assert(false, "Unoverriden abstract method")
 
 func state_enter(previous_state_path: NodePath) -> void:
-    pass
+    assert(false, "Unoverriden abstract method")
 
 func state_process(delta: float):
-    pass
+    assert(false, "Unoverriden abstract method")
 
 func state_physics_process(delta: float):
-    pass
+    assert(false, "Unoverriden abstract method")
 
 func state_exit():
-    pass
+    assert(false, "Unoverriden abstract method")

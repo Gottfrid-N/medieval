@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgh8jjk0n6j1b"]
+[gd_scene load_steps=8 format=3 uid="uid://dgh8jjk0n6j1b"]
 
-[ext_resource type="Script" uid="uid://cfcugwc5hve5x" path="res://scenes/player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://cfcugwc5hve5x" path="res://scripts/player/player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://bv7pdradqmw76" path="res://scripts/player/player_state_machine.gd" id="2_g2els"]
+[ext_resource type="Script" uid="uid://cu1ig7xc6iq2i" path="res://scripts/player/states/airborne.gd" id="3_tuyoq"]
+[ext_resource type="Script" uid="uid://luis83jkfp3h" path="res://scripts/player/states/moving.gd" id="4_fjrip"]
+[ext_resource type="Script" uid="uid://r27jylim5owb" path="res://scripts/player/states/grounded.gd" id="5_smehm"]
+[ext_resource type="Script" uid="uid://t1pov305qo5p" path="res://scripts/player/states/crouching.gd" id="6_ur7pv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u8vuu"]
 
@@ -9,3 +14,23 @@ script = ExtResource("1_3vyb7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_u8vuu")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_g2els")
+
+[node name="Airborne" type="Node" parent="StateMachine"]
+script = ExtResource("3_tuyoq")
+
+[node name="Moving" type="Node" parent="StateMachine/Airborne"]
+script = ExtResource("4_fjrip")
+
+[node name="Grounded" type="Node" parent="StateMachine"]
+script = ExtResource("5_smehm")
+
+[node name="Sliding" type="Node" parent="StateMachine/Grounded"]
+
+[node name="Moving" type="Node" parent="StateMachine/Grounded"]
+script = ExtResource("4_fjrip")
+
+[node name="Crouching" type="Node" parent="StateMachine/Grounded/Moving"]
+script = ExtResource("6_ur7pv")
