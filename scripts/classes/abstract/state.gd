@@ -51,14 +51,13 @@ func _on_sub_state_switch_state(next_state_path: NodePath):
         switch_state.emit(next_state_path)
 
 func set_sub_state(sub_state_path: NodePath):
-    var relative_sub_state_path = get_path_to(owner.get_node(sub_state_path))
+    var relative_sub_state_path := NodePath(get_path_to(owner.get_node(sub_state_path)).get_name(0))
     assert(has_node(relative_sub_state_path), "i fucked up")
 
     if relative_sub_state_path != ^".":
         sub_state = get_node(relative_sub_state_path)
     else:
         sub_state = null
-
 
 func state_handle_input(input: InputEvent):
     assert(false, "Unoverriden abstract method")

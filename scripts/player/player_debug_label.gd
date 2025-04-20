@@ -7,19 +7,17 @@ func _ready() -> void:
 
     player = owner.get_node(^"Player")
 
-func get_sub_state_tree(state: State, array: Array[State] = []) -> Array[State]:
-    array.append(state)
-
+func get_sub_state_array(state: State, array:=[]):
+    array.push_back(state.name)
     if state.sub_state != null:
-        print(state.sub_state)
-        array.append_array(get_sub_state_tree(state.sub_state, array))
-    
+        array = get_sub_state_array(state.sub_state, array)
     return array
 
 func _process(delta: float) -> void:
     var sub_states = ""
-    for sub_state in get_sub_state_tree(player.state_machine.state):
-        sub_states += "-> %s" % [sub_state]
+    for sub_state in get_sub_state_array(player.state_machine.state):
+        sub_states += " -> %s" % [sub_state]
 
-    text = "p: %v v: %v
-            state: %s" % [player.position, player.velocity, sub_states]
+    text = "p: %v, v: %v
+            state: %s
+            in: %s" % [player.position, player.velocity, sub_states, player.input_direction]

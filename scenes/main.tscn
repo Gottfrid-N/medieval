@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://ceinnb707xera"]
+[gd_scene load_steps=6 format=3 uid="uid://ceinnb707xera"]
 
 [ext_resource type="Script" uid="uid://c5bndipt67jr1" path="res://scripts/main.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://dgh8jjk0n6j1b" path="res://scenes/player.tscn" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://jmkt3bjdyvmv" path="res://scripts/player/player_debug_label.gd" id="3_sugp2"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_sugp2"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jyhfs"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_o5qli")
@@ -15,3 +19,18 @@ offset_right = 170.0
 offset_bottom = 162.0
 text = "unloaded :/"
 script = ExtResource("3_sugp2")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(598, 461)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-4, -1)
+shape = SubResource("WorldBoundaryShape2D_sugp2")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(0, 200)
+scale = Vector2(2000, 400)
+texture = SubResource("PlaceholderTexture2D_jyhfs")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(89, 306)

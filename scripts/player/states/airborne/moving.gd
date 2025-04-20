@@ -13,7 +13,7 @@ func state_physics_process(delta: float):
     if player.is_on_floor() and sub_state == null:
         switch_state.emit(state_machine.STATE_PATHS.GROUNDED_MOVING)
 
-    player.apply_acceleration(delta)
+    player.apply_input_acceleration(delta)
 
 func state_exit():
     pass

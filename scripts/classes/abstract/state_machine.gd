@@ -24,10 +24,8 @@ func handle_input(event: InputEvent):
 
 func _on_state_switch_state(next_state_path: NodePath):
     assert(owner.has_node(next_state_path))
-    print(next_state_path)
 
     var previous_state_path = owner.get_path_to(state)
-    print("changing")
     state.exit()
     state = get_node(NodePath(next_state_path.get_name(1)))
     state.enter(previous_state_path, next_state_path)

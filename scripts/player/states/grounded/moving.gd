@@ -1,7 +1,8 @@
 extends PlayerState
 
 func state_handle_input(input: InputEvent):
-    pass
+    if input.is_action_pressed("jump"):
+        player.velocity.y -= 500
 
 func state_enter(previous_state_path: NodePath) -> void:
     pass
@@ -13,7 +14,7 @@ func state_physics_process(delta: float):
     if not player.is_on_floor() and sub_state == null:
         switch_state.emit(state_machine.STATE_PATHS.AIRBORNE_MOVING)
     
-    player.apply_acceleration(delta)
+    player.apply_input_acceleration(delta)
 
 func state_exit():
     pass
