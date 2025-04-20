@@ -10,7 +10,10 @@ func state_process(delta: float):
     pass
 
 func state_physics_process(delta: float):
-    pass
+    if not player.is_on_floor() and sub_state == null:
+        switch_state.emit(state_machine.STATE_PATHS.AIRBORNE_MOVING)
+    
+    player.apply_acceleration(delta)
 
 func state_exit():
     pass

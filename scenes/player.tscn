@@ -1,11 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgh8jjk0n6j1b"]
+[gd_scene load_steps=11 format=3 uid="uid://dgh8jjk0n6j1b"]
 
 [ext_resource type="Script" uid="uid://cfcugwc5hve5x" path="res://scripts/player/player.gd" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://bv7pdradqmw76" path="res://scripts/player/player_state_machine.gd" id="2_g2els"]
-[ext_resource type="Script" uid="uid://cu1ig7xc6iq2i" path="res://scripts/player/states/airborne.gd" id="3_tuyoq"]
-[ext_resource type="Script" uid="uid://luis83jkfp3h" path="res://scripts/player/states/moving.gd" id="4_fjrip"]
-[ext_resource type="Script" uid="uid://r27jylim5owb" path="res://scripts/player/states/grounded.gd" id="5_smehm"]
-[ext_resource type="Script" uid="uid://t1pov305qo5p" path="res://scripts/player/states/crouching.gd" id="6_ur7pv"]
+[ext_resource type="Script" uid="uid://dkfttbnbr204c" path="res://scripts/player/states/moving_camera.gd" id="3_fjrip"]
+[ext_resource type="Script" uid="uid://cu1ig7xc6iq2i" path="res://scripts/player/states/airborne/airborne.gd" id="3_tuyoq"]
+[ext_resource type="Script" uid="uid://luis83jkfp3h" path="res://scripts/player/states/grounded/moving.gd" id="4_fjrip"]
+[ext_resource type="Script" uid="uid://r27jylim5owb" path="res://scripts/player/states/grounded/grounded.gd" id="5_smehm"]
+[ext_resource type="Script" uid="uid://q0jpr127io08" path="res://scripts/player/states/grounded/sliding.gd" id="5_ur7pv"]
+[ext_resource type="Script" uid="uid://t1pov305qo5p" path="res://scripts/player/states/grounded/crouching.gd" id="6_ur7pv"]
+[ext_resource type="Script" uid="uid://c671xe2ay02c" path="res://scripts/player/states/airborne/moving.gd" id="8_smehm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u8vuu"]
 
@@ -18,19 +21,23 @@ shape = SubResource("CapsuleShape2D_u8vuu")
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_g2els")
 
-[node name="Airborne" type="Node" parent="StateMachine"]
-script = ExtResource("3_tuyoq")
+[node name="MovingCamera" type="Node" parent="StateMachine"]
+script = ExtResource("3_fjrip")
 
-[node name="Moving" type="Node" parent="StateMachine/Airborne"]
-script = ExtResource("4_fjrip")
-
-[node name="Grounded" type="Node" parent="StateMachine"]
+[node name="Grounded" type="Node" parent="StateMachine/MovingCamera"]
 script = ExtResource("5_smehm")
 
-[node name="Sliding" type="Node" parent="StateMachine/Grounded"]
+[node name="Sliding" type="Node" parent="StateMachine/MovingCamera/Grounded"]
+script = ExtResource("5_ur7pv")
 
-[node name="Moving" type="Node" parent="StateMachine/Grounded"]
+[node name="Moving" type="Node" parent="StateMachine/MovingCamera/Grounded"]
 script = ExtResource("4_fjrip")
 
-[node name="Crouching" type="Node" parent="StateMachine/Grounded/Moving"]
+[node name="Crouching" type="Node" parent="StateMachine/MovingCamera/Grounded/Moving"]
 script = ExtResource("6_ur7pv")
+
+[node name="Airborne" type="Node" parent="StateMachine/MovingCamera"]
+script = ExtResource("3_tuyoq")
+
+[node name="Moving" type="Node" parent="StateMachine/MovingCamera/Airborne"]
+script = ExtResource("8_smehm")

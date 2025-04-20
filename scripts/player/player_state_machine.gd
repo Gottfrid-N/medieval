@@ -1,10 +1,20 @@
 class_name PlayerStateMachine extends StateMachine
 
-func _process(delta: float):
-    pass
+const STATE_PATHS: Dictionary[String, NodePath] = {
+    "GROUNDED": ^"/Player/StateMachine/MovingCamera/Grounded",
+    "GROUNDED_MOVING": ^"/Player/StateMachine/MovingCamera/Grounded/Moving",
+    "AIRBORNE": ^"/Player/StateMachine/MovingCamera/Airborne",
+    "AIRBORNE_MOVING": ^"/Player/StateMachine/MovingCamera/Airborne/Moving"
+}
 
-func _physics_process(delta: float):
-    pass
+func process(delta: float):
+    if state != null:
+        state.process(delta)
 
-func _unhandled_input(event: InputEvent) -> void:
-    pass
+func physics_process(delta: float):
+    if state != null:
+        state.physics_process(delta)
+
+func handle_input(event: InputEvent):
+    if state != null:
+        state.handle_input(event)

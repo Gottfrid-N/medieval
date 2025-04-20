@@ -7,3 +7,4 @@
 script = ExtResource("1_o5qli")
 
 [node name="Player" parent="." instance=ExtResource("2_0wfyh")]
+speed = 0.0

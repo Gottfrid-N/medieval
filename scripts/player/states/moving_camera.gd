@@ -1,16 +1,16 @@
 extends PlayerState
 
 func state_handle_input(input: InputEvent):
-    pass
+	pass
 
 func state_enter(previous_state_path: NodePath) -> void:
-    pass
+	pass
 
 func state_process(delta: float):
-    pass
+	pass
 
 func state_physics_process(delta: float):
-    pass
+	player.move_camera(delta)
 
 func state_exit():
-    pass
+	pass
