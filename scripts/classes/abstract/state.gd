@@ -6,6 +6,8 @@ signal switch_state(next_state_path: NodePath)
 var sub_state: State = null
 
 func _ready() -> void:
+    await owner.ready
+
     for child: State in get_children():
         child.switch_state.connect(_on_sub_state_switch_state)
 
@@ -18,7 +20,8 @@ func enter(previous_state_path: NodePath, sub_state_path: NodePath = ^"") -> voi
     state_enter(previous_state_path)
     if sub_state_path != ^"":
         set_sub_state(sub_state_path)
-        sub_state.enter(previous_state_path, sub_state_path)
+        if sub_state != null:
+            sub_state.enter(previous_state_path, sub_state_path)
 
 func process(delta: float):
     state_process(delta)
@@ -26,7 +29,6 @@ func process(delta: float):
         sub_state.process(delta)
 
 func physics_process(delta: float):
-    await ready
     state_physics_process(delta)
     if sub_state != null:
         sub_state.physics_process(delta)
@@ -40,7 +42,7 @@ func _on_sub_state_switch_state(next_state_path: NodePath):
     assert(owner.has_node(next_state_path))
 
     var previous_state_path = owner.get_path_to(self)
-    if previous_state_path.get_name(previous_state_path.get_name_count()) == next_state_path.get_name(previous_state_path.get_name_count()):
+    if previous_state_path.get_name(previous_state_path.get_name_count() - 1) == next_state_path.get_name(previous_state_path.get_name_count() - 1):
         sub_state.exit()
         set_sub_state(next_state_path)
         if sub_state != null:
@@ -49,9 +51,10 @@ func _on_sub_state_switch_state(next_state_path: NodePath):
         switch_state.emit(next_state_path)
 
 func set_sub_state(sub_state_path: NodePath):
-    var relative_sub_state_path = NodePath(get_path_to(get_node(sub_state_path)).get_name(0))
+    var relative_sub_state_path = get_path_to(owner.get_node(sub_state_path))
     assert(has_node(relative_sub_state_path), "i fucked up")
-    if relative_sub_state_path != null:
+
+    if relative_sub_state_path != ^".":
         sub_state = get_node(relative_sub_state_path)
     else:
         sub_state = null

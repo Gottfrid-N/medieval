@@ -8,6 +8,7 @@ class_name Player extends CharacterBody2D
 
 @export var speed := 0.0
 @export var input_direction := 0.0
+@export var input_direction_vector := Vector2(0, 0)
 
 @onready var state_machine: PlayerStateMachine = $"StateMachine"
 
@@ -19,7 +20,7 @@ func _process(delta):
 
 func _physics_process(delta): 
     input_direction = Input.get_axis("move_left", "move_right")
-
+    input_direction_vector = Vector2(cos(input_direction), sin(input_direction))
     speed = velocity.length()
 
     state_machine.physics_process(delta)
@@ -38,8 +39,8 @@ func apply_friction(delta: float):
         velocity *= max(speed - drop, 0) / speed
 
 func apply_acceleration(delta: float):
-    var acceleration_velocity = acceleration
-    velocity += acceleration_velocity * input_direction
+    var acceleration_velocity = acceleration * delta
+    velocity += acceleration_velocity * input_direction_vector
 
 func apply_gravity(delta: float):
     velocity.y += get_gravity().y * delta 

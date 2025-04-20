@@ -10,7 +10,7 @@ func state_process(delta: float):
     pass
 
 func state_physics_process(delta: float):
-    pass
+    switch_state.emit(state_machine.STATE_PATHS.GROUNDED_MOVING)
 
 func state_exit():
     pass

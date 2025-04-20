@@ -11,7 +11,8 @@ func get_sub_state_tree(state: State, array: Array[State] = []) -> Array[State]:
     array.append(state)
 
     if state.sub_state != null:
-        array.append(get_sub_state_tree(state.sub_state, array))
+        print(state.sub_state)
+        array.append_array(get_sub_state_tree(state.sub_state, array))
     
     return array
 

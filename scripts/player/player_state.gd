@@ -1,10 +1,5 @@
 class_name PlayerState extends State
 
-var player: Player
-var state_machine: PlayerStateMachine
+@onready var player: Player = owner
+@onready var state_machine: PlayerStateMachine = owner.get_node("StateMachine")
 
-func _ready() -> void:
-    await owner.ready
-
-    player = owner
-    state_machine = owner.get_node("StateMachine")
