@@ -1,6 +1,7 @@
 class_name StateMachine extends Node
 
 @onready var state: State = get_child(0)
+@onready var sub_state_depth: int
 
 func get_sub_state(_state: State, depth: int) -> State:
 	if depth > 0:
