@@ -1,16 +1,17 @@
 extends PlayerState
 
 func state_handle_input(input: InputEvent):
-	pass
+    if input.is_action_pressed("debug1"):
+        switch_state.emit(state_machine.STATE_PATHS.GROUNDED_MOVING)
 
 func state_enter(previous_state_path: NodePath) -> void:
-	pass
+    pass
 
 func state_process(delta: float):
-	pass
+    pass
 
 func state_physics_process(delta: float):
-	player.move_camera(delta)
+    player.move_camera(delta)
 
 func state_exit():
-	pass
+    pass

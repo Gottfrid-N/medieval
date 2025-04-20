@@ -12,34 +12,34 @@ class_name Player extends CharacterBody2D
 @onready var state_machine: PlayerStateMachine = $"StateMachine"
 
 func _ready():
-	pass
+    pass
 
 func _process(delta):
-	state_machine.process(delta)
+    state_machine.process(delta)
 
 func _physics_process(delta): 
-	input_direction = Input.get_axis("move_left", "move_right")
+    input_direction = Input.get_axis("move_left", "move_right")
 
-	speed = velocity.length()
+    speed = velocity.length()
 
-	state_machine.physics_process(delta)
+    state_machine.physics_process(delta)
 
-	move_and_slide()
+    move_and_slide()
 
 func _unhandled_input(event: InputEvent) -> void:
-	state_machine.handle_input(event)
+    state_machine.handle_input(event)
 
 func move_camera(delta: float):
-	pass
+    pass
 
 func apply_friction(delta: float):
-	if speed != 0:
-		var drop = speed * friction * delta
-		velocity *= max(speed - drop, 0) / speed
+    if speed != 0:
+        var drop = speed * friction * delta
+        velocity *= max(speed - drop, 0) / speed
 
 func apply_acceleration(delta: float):
-	var acceleration_velocity = acceleration
-	velocity += acceleration_velocity * input_direction
+    var acceleration_velocity = acceleration
+    velocity += acceleration_velocity * input_direction
 
 func apply_gravity(delta: float):
-	velocity.y += get_gravity().y * delta 
+    velocity.y += get_gravity().y * delta 
