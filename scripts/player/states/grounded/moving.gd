@@ -2,7 +2,7 @@ extends PlayerState
 
 func state_handle_input(input: InputEvent):
     if input.is_action_pressed("jump"):
-        player.velocity.y -= 500
+        player.velocity.y -= 1000
 
 func state_enter(previous_state_path: NodePath) -> void:
     pass

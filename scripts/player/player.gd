@@ -2,7 +2,7 @@ class_name Player extends CharacterBody2D
 
 @export var default_acceleration := 5000
 @export var acceleration := default_acceleration
-@export var max_acceleration := 300.0
+@export var max_acceleration := 150.0
 
 @export var default_friction := 15.0
 @export var friction := default_friction
@@ -39,12 +39,11 @@ func apply_friction(delta: float):
 
 func apply_input_acceleration(delta: float):
     var acceleration_velocity = acceleration * delta
-    velocity.x += acceleration_velocity * input_direction
-    if velocity.x > max_acceleration:
-        velocity.x = max_acceleration
-        
-    elif (speed > 0 and acceleration_velocity < 0) or (speed < 0 and acceleration_velocity > 0):
+
+    if abs(velocity.x) <= 300:
         velocity.x += acceleration_velocity * input_direction
+        if abs(velocity.x) > 300:
+            velocity.x = 300 * (velocity.x / abs(velocity.x))
 
 func apply_gravity(delta: float):
     velocity.y += get_gravity().y * delta 
